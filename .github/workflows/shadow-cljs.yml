@@ -1,0 +1,162 @@
+name: Test, build and deploy shadow-cljs assets
+
+
+on:
+  push:
+    paths:
+      - '.github/workflows/shadow-cljs.yml'
+      - 'deps.edn'
+      - 'package.json'
+      - '*.config.js'
+      - 'src/web/**'
+      - 'src/test/hooks.clj'
+      - 'src/core/**/*.cljs'
+      - 'src/core/**/*.cljc'
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+
+env:
+  clojure-cli: "latest"
+  java-version: "17"
+  node-version: "17"
+
+
+jobs:
+  test:
+    if: "!(contains(github.event.head_commit.message, 'ci skip') || contains(github.event.head_commit.message, 'skip ci'))"
+    runs-on: ubuntu-latest
+    name: test @ JDK
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: ${{ env.java-version }}
+      - name: Preparation
+        run: |
+          cp .ci/settings.xml ~/.m2/settings.xml
+          mvn dependency:get -Dartifact=org.apache.maven.plugins:maven-deploy-plugin:2.8
+      - name: Set up clojure-cli
+        uses: DeLaGuardo/setup-clojure@9.4
+        with:
+          cli: ${{ env.clojure-cli }}
+      - name: Cache clojure dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.m2/repository
+            ~/.gitlibs
+            ~/.deps.clj
+          key: cljdeps-${{ runner.os }}-${{ hashFiles('**/deps.edn') }}
+          restore-keys: |
+            cljdeps-${{ runner.os }}-
+
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.node-version }}
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: Install node modules
+        run: npm install
+
+
+      - name: Test runner
+        run: |
+          clojure -M:test:cljs-test-runner
+
+
+  build-and-deploy:
+    name: Build shadow-cljs assets
+    needs: [ test ]
+    runs-on: ubuntu-latest
+    if: "!(contains(github.event.head_commit.message, 'ci skip') || contains(github.event.head_commit.message, 'skip ci'))"
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ssh-key: ${{ secrets.VOLUME_DEPLOY_KEY  }}
+      - name: Setup java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: ${{ env.java-version }}
+      - name: Preparation
+        run: |
+          cp .ci/settings.xml ~/.m2/settings.xml
+          mvn dependency:get -Dartifact=org.apache.maven.plugins:maven-deploy-plugin:2.8
+      - name: Set up clojure-cli
+        uses: DeLaGuardo/setup-clojure@9.4
+        with:
+          cli: ${{ env.clojure-cli }}
+      - name: Cache clojure dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.m2/repository
+            ~/.gitlibs
+            ~/.deps.clj
+          key: cljdeps-${{ runner.os }}-${{ hashFiles('**/deps.edn') }}
+          restore-keys: |
+            cljdeps-${{ runner.os }}-
+
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.node-version }}
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: Install node modules
+        run: npm install
+
+
+      - name: Shadow-CLJS
+        run: |
+          npx shadow-cljs release app
+
+
+      - name: Deploy web assets to repo
+        run: |
+          git pull origin master
+          git config --local user.name $GITHUB_ACTOR
+          git config --local user.email $(git --no-pager show --format="<%ae>" -s HEAD)
+          if git status | grep -q "working tree clean"
+          then
+            echo "No changes since last run"
+          else
+            git add -A
+            git commit -m "web assets revision [shadow-cljs.yml]"
+            git remote -v
+            git push origin master
+          fi
+
+
+      - name: Discord action job digest notification
+        if: always() # Pick up events even if the job fails or is canceled.
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        uses: sarisia/actions-status-discord@v1

@@ -1,0 +1,10 @@
+*.tgz
+/.*
+/*.config.js
+/*.edn
+/dist
+build
+node_modules
+target
+!*.css
+!*.js

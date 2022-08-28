@@ -1,0 +1,48 @@
+{
+ :deps {:aliases [:cljs/gh-pages :test :rebl]}
+
+ :open-file-command ["emacsclient" "-n" ["+%s:%s" :line :column] :file]
+
+ :http {:port 39630}
+
+ :dev-http {7080 {:handler dev/ring-handler ;; :proxy-url "http://localhost:9000"
+                  }}
+
+ :builds {:app {:target        :browser
+                :asset-path    "/"
+                ;; :asset-path "."
+                ;; /app is base path for server app
+                :output-dir    "gh-pages"
+                :build-options {:manifest-name "manifest.dev.json"}
+                :modules       {:libs {:entries [rum.core]}
+                                :main {:depends-on #{:libs}
+                                       :entries    [page.index]
+                                       :init-fn    page.index/init!}}
+
+
+                :parallel-build true
+
+
+                :build-hooks [(hooks/copy-manifest-file)
+                              (hooks/spit-body-script-modules)
+                              (hooks/inspect-state)]
+
+
+                :devtools {:watch-dir      "gh-pages" ; https://shadow-cljs.github.io/docs/UsersGuide.html#_css_reloading
+                           ;; `watch-path`: /dev/main.css -> /foo/dev/main.css
+                           #_#_:watch-path "/b"}
+
+
+                :release {:output-dir        "gh-pages"
+                          :module-hash-names 8
+                          :closure-defines   {"goog.DEBUG" false
+                                              #_#_         "goog.debug.LOGGING_ENABLED" true}
+                          :compiler-options  {:externs ["datascript/externs.js"]}
+                          :build-options     {:manifest-name "manifest.json"}
+                          }}}
+ }
+
+
+;; Local Variables:
+;; cider-preferred-build-tool: shadow-cljs
+;; End:

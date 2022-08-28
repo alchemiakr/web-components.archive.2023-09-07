@@ -1,0 +1,100 @@
+{:paths ["src/core" "src/web"]
+
+
+ :deps
+ {
+  rum/rum            {:mvn/version "0.12.9"}
+  clj-commons/citrus {:mvn/version "3.3.0"}
+  }
+
+
+ :aliases
+ {:cljs/gh-pages
+  {:extra-deps
+   {
+    binaryage/devtools   {:mvn/version "1.0.6"}
+    binaryage/oops       {:mvn/version "0.7.2"}
+    cljs-http/cljs-http  {:mvn/version "0.1.46"}
+    com.taoensso/timbre  {:mvn/version "5.2.1"}
+    thheller/shadow-cljs {:mvn/version "2.19.9"}
+    }}
+
+
+  :provided
+  {:extra-deps
+   {
+    }}
+
+
+  :test
+  {:extra-paths ["src/test"]
+   :extra-deps
+   {
+    integrant/integrant        {:mvn/version "0.8.0"}
+    io.github.ajchemist/runner {:mvn/version "2022.238.33405"}
+    metosin/reitit             {:mvn/version "0.5.18"}
+    mvxcvi/alphabase           {:mvn/version "2.1.1"}
+    ns-tracker/ns-tracker      {:mvn/version "0.4.0"}
+    org.clojure/clojure        {:mvn/version "1.11.1"}
+    ring/ring-core             {:mvn/version "1.9.5"}
+    ring/ring-defaults         {:mvn/version "0.3.3"}
+    }}
+
+
+  :test-runner
+  {:extra-deps {io.github.cognitect-labs/test-runner {:git/tag "v0.5.1" :git/sha "dfb30dd"}}
+   :main-opts  ["-m" "cognitect.test-runner" "-d" "src/test"]
+   :exec-fn    cognitect.test-runner.api/test
+   :exec-args  {:dirs     ["src/test"]
+                :excludes [:deprecated]}}
+
+
+  :cljs-test-runner
+  {:extra-deps {olical/cljs-test-runner {:mvn/version "3.8.0"}}
+   :main-opts  ["-m" "cljs-test-runner.main" "-d" "src/test"]}
+
+
+  :build
+  {:deps
+   {
+    io.github.clojure/tools.build      {:git/tag "v0.8.3" :git/sha "0d20256"}
+    io.github.ajchemist/user.java.time {:mvn/version "2022.75.23671"}
+    }
+   :ns-default build.package}
+
+
+  :maven-tool
+  {:extra-deps {org.apache.maven/maven-model                {:mvn/version "3.8.6"}
+                io.github.ajchemist/user.apache.maven.alpha {:mvn/version "2021.252.6975"}}
+   :ns-default user.apache.maven.api}
+
+
+  :build/gh-pages
+  {:deps
+   {
+    io.github.clojure/tools.build      {:git/tag "v0.8.3" :git/sha "0d20256"}
+    io.github.ajchemist/user.java.time {:mvn/version "2022.75.23671"}
+    }
+   :ns-default build.gh-pages}
+
+
+  :release
+  {:ns-default release
+   :exec-fn    release/build}
+
+
+  :outdated
+  {:extra-deps {com.github.liquidz/antq {:mvn/version "RELEASE"}}
+   :main-opts  ["-m" "antq.core"]}
+
+
+  :slf4j-nop
+  {:extra-deps
+   {
+    org.slf4j/slf4j-nop {:mvn/version "2.0.0"}
+    }}}}
+
+
+;; Local Variables:
+;; cider-preferred-build-tool: clojure-cli
+;; End:

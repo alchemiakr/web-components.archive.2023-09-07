@@ -1,0 +1,46 @@
+/* floating-label-input */
+
+
+@layer components
+{
+  .floating-label-input
+  {
+    @apply relative mb-3 xl:w-96;
+  }
+
+
+  .floating-label-input > input::placeholder
+  {
+    /* placeholder 텍스트는 투명처리하기 */
+    color: transparent;
+  }
+
+
+  .floating-label-input > input
+  {
+    height: calc(3.5rem + 2px);
+    @apply leading-tight block w-full py-4 px-3 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none;
+  }
+
+
+  .floating-label-input > input:focus,
+  .floating-label-input > input:not(:placeholder-shown)
+  {
+    @apply pt-[1.625rem] pb-2.5;
+  }
+
+
+  .floating-label-input > label
+  {
+    transition: opacity .1s ease-in-out,transform .1s ease-in-out;
+    @apply absolute top-0 left-0 h-full py-4 px-3 pointer-events-none border border-solid border-transparent origin-[0_0] transition text-gray-700;
+  }
+
+
+  .floating-label-input > input:focus ~ label,
+  .floating-label-input > input:not(:placeholder-shown) ~ label
+  {
+    opacity: 0.65;
+    transform: scale(.85) translateY(-.5rem) translateX(.15rem);
+  }
+}
