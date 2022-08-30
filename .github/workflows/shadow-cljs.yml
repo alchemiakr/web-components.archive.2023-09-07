@@ -8,8 +8,10 @@ on:
       - 'deps.edn'
       - 'package.json'
       - '*.config.js'
-      - 'src/web/**'
-      - 'src/test/hooks.clj'
+      - 'src/web/env.clj'
+      - 'src/web/hooks.clj'
+      - 'src/web/**.cljs'
+      - 'src/web/**.cljc'
       - 'src/core/**/*.cljs'
       - 'src/core/**/*.cljc'
     branches:

@@ -6,6 +6,11 @@ on:
   # Runs on pushes targeting the default branch
   push:
     paths:
+      - '.github/workflows/pages.yml'
+      - "src/core/**/*.clj"
+      - "src/core/**/*.cljc"
+      - "src/web/**.clj"
+      - "src/web/**.cljc"
       - 'server-render/**'
       - 'gh-pages/**'
     branches:
