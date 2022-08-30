@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <packaging>jar</packaging>
+  <groupId>io.github.alchemiakr</groupId>
+  <artifactId>web-components</artifactId>
+  <version>2022.242.27252</version>
+  <name>web-components</name>
+  <dependencies>
+    <dependency>
+      <groupId>org.clojure</groupId>
+      <artifactId>clojure</artifactId>
+      <version>1.11.1</version>
+    </dependency>
+    <dependency>
+      <groupId>rum</groupId>
+      <artifactId>rum</artifactId>
+      <version>0.12.9</version>
+    </dependency>
+    <dependency>
+      <groupId>clj-commons</groupId>
+      <artifactId>citrus</artifactId>
+      <version>3.3.0</version>
+    </dependency>
+  </dependencies>
+  <build>
+    <sourceDirectory>src/core</sourceDirectory>
+  </build>
+  <repositories>
+    <repository>
+      <id>clojars</id>
+      <url>https://repo.clojars.org/</url>
+    </repository>
+  </repositories>
+  <scm>
+    <url>https://github.com/alchemiakr/web-components</url>
+  </scm>
+</project>
