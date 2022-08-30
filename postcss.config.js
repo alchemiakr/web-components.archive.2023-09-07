@@ -11,6 +11,7 @@ module.exports = {
       plugins: [],
       path: ['./node_modules']
     }),
+    'tailwindcss/nesting',
     tailwindcss('./tailwind.config.js'),
     process.env.NODE_ENV === 'production' ? require('autoprefixer') : null,
     process.env.NODE_ENV === 'production' ? cssnano({ preset: 'default' }) : null,

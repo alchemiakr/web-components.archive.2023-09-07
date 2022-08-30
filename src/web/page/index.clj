@@ -21,6 +21,10 @@
      {:middleware [[server-render/wrap-body-scripts "main"]
                    [server-render/wrap-html-request :html/scripts
                     [:script {:dangerouslySetInnerHTML {:__html (slurp (jio/resource "alchemiakr/head.js"))}}]]
+                   [server-render/wrap-html-request :html/scripts
+                    [:script {:async true :src "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3733725353908789" :crossorigin "anonymous"}]]
+                   [server-render/wrap-html-request :html/stylesheets (fnil into [])
+                    [[:link {:rel "stylesheet" :href "https://fonts.googleapis.com/icon?family=Material+Icons"}]]]
                    [server-render/wrap-webpack-asset-stylesheets ["core.css"]]]}
      ["/"
       (fn [request]
