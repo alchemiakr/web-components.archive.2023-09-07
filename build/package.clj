@@ -72,10 +72,10 @@
                    :include    "**/rum.{clj,cljs,cljc}"}) ; tailwindcss content
   (build/copy-dir {:src-dirs   ["src/core"]
                    :target-dir "dist"
-                   :include    "**/component.{clj,cljs,cljc}"}) ; tailwindcss content
+                   :include    "**/components.{clj,cljs,cljc}"}) ; tailwindcss content
   (build/copy-file {:src "package.json" :target "dist/package.json"})
   ;; (build/copy-file {:src ".npmrc" :target "dist/.npmrc"})
-  ;; (build/copy-file {:src ".npmignore" :target "dist/.npmignore"})
+  (build/copy-file {:src ".npmignore" :target "dist/.npmignore"})
   (binding [jsh/*sh-dir* "dist"]
     (let [{:keys [_out] :as ret} (jsh/sh "npm" "pack")]
       (sh-exit! ret)

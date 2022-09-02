@@ -1,4 +1,4 @@
-name: Test, build and deploy shadow-cljs assets
+name: "Test, build and deploy shadow-cljs assets #JS"
 
 
 on:
