@@ -45,7 +45,7 @@
    [:svg
     {:aria-hidden "true"
      :role        "status"
-     :class       ["inline" "animate-spin"]
+     :class       ["animate-spin"]
      :viewBox     "0 0 100 101"
      :fill        "none"
      :xmlns       "http://www.w3.org/2000/svg"}
@@ -55,7 +55,7 @@
 
 (rum/defc basic-spinner-bold
   []
-  [:svg {:class    ["inline" "animate-spin"]
+  [:svg {:class    ["animate-spin"]
          :xmlns    "http://www.w3.org/2000/svg"
          :fill     "none"
          :view-box "0 0 24 24"}
