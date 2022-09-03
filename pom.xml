@@ -4,7 +4,7 @@
   <packaging>jar</packaging>
   <groupId>io.github.alchemiakr</groupId>
   <artifactId>web-components</artifactId>
-  <version>2022.242.27252</version>
+  <version>2022.246.24007</version>
   <name>web-components</name>
   <dependencies>
     <dependency>
