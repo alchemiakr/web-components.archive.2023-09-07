@@ -41,22 +41,27 @@
   []
   [:section.p-4
    [:.flex
-    [:.inline-flex.flex-shrink-0.justify-center.items-center.w-8.h-8.rounded-lg components/check-icon]
-    [:.inline-flex.flex-shrink-0.justify-center.items-center.w-8.h-8.rounded-lg.text-green-500.bg-green-100 {:class "dark:text-green-200 dark:bg-green-800"} components/check-icon]
-    [:.inline-flex.flex-shrink-0.justify-center.items-center.w-8.h-8.rounded-lg.text-yellow-500.bg-yellow-100 components/check-icon]
+    [:.inline-flex.flex-shrink-0.justify-center.items-center.w-8.h-8.rounded-lg [:span.w-5.h-5 (components/check-icon)]]
+    [:.inline-flex.flex-shrink-0.justify-center.items-center.w-8.h-8.rounded-lg.text-green-500.bg-green-100 {:class "dark:text-green-200 dark:bg-green-800"} [:span.w-5.h-5 (components/check-icon)]]
+    [:.inline-flex.flex-shrink-0.justify-center.items-center.w-8.h-8.rounded-lg.text-yellow-500.bg-yellow-100 [:span.w-5.h-5 (components/check-icon)]]
     ]
    [:.flex
-    [:.inline-flex.flex-shrink-0.justify-center.items-center.w-8.h-8.rounded-lg components/danger-icon]
-    [:.inline-flex.flex-shrink-0.justify-center.items-center.w-8.h-8.rounded-lg.text-red-500.bg-red-100 {:class "dark:text-red-200 dark:bg-red-800"} components/danger-icon]
-    [:.inline-flex.flex-shrink-0.justify-center.items-center.w-8.h-8.rounded-lg components/danger-icon]]
+    [:.inline-flex.flex-shrink-0.justify-center.items-center.w-8.h-8.rounded-lg [:span.w-5.h-5 (components/danger-icon)]]
+    [:.inline-flex.flex-shrink-0.justify-center.items-center.w-8.h-8.rounded-lg.text-red-500.bg-red-100 {:class "dark:text-red-200 dark:bg-red-800"} [:span.w-5.h-5 (components/danger-icon)]]
+    [:.inline-flex.flex-shrink-0.justify-center.items-center.w-8.h-8.rounded-lg [:span.w-5.h-5 (components/danger-icon)]]]
    [:.flex
-    [:.inline-flex.flex-shrink-0.justify-center.items-center.w-8.h-8.rounded-lg components/warn-icon]
-    [:.inline-flex.flex-shrink-0.justify-center.items-center.w-8.h-8.rounded-lg.text-orange-500.bg-orange-100 {:class "dark:text-orange-200 dark:bg-orange-800"} components/warn-icon]
-    [:.inline-flex.flex-shrink-0.justify-center.items-center.w-8.h-8.rounded-lg.text-red-500.bg-red-100 components/warn-icon]]
+    [:.inline-flex.flex-shrink-0.justify-center.items-center.w-8.h-8.rounded-lg [:span.w-5.h-5 (components/warn-icon)]]
+    [:.inline-flex.flex-shrink-0.justify-center.items-center.w-8.h-8.rounded-lg.text-orange-500.bg-orange-100 {:class "dark:text-orange-200 dark:bg-orange-800"} [:span.w-5.h-5 (components/warn-icon)]]
+    [:.inline-flex.flex-shrink-0.justify-center.items-center.w-8.h-8.rounded-lg.text-red-500.bg-red-100 [:span.w-5.h-5 (components/warn-icon)]]]
    [:.flex
-    [:.inline-flex.flex-shrink-0.justify-center.items-center.w-8.h-8.rounded-lg.text-green-500 {:class "dark:text-green-200"} components/basic-spinner]
-    [:.inline-flex.flex-shrink-0.justify-center.items-center.w-8.h-8.rounded-lg.text-blue-500 {:class "dark:text-blue-200"} components/basic-spinner]
-    [:.inline-flex.flex-shrink-0.justify-center.items-center.w-8.h-8.rounded-lg.text-yellow-500 {:class "dark:text-yellow-200"} components/basic-spinner]
+    [:.inline-flex.flex-shrink-0.justify-center.items-center.w-8.h-8.rounded-lg.text-green-500 {:class "dark:text-green-200"} [:span.w-5.h-5 (components/basic-spinner-bold)]]
+    [:.inline-flex.flex-shrink-0.justify-center.items-center.w-8.h-8.rounded-lg.text-blue-500 {:class "dark:text-blue-200"} [:span.w-5.h-5 (components/basic-spinner-bold)]]
+    [:.inline-flex.flex-shrink-0.justify-center.items-center.w-8.h-8.rounded-lg.text-yellow-500 {:class "dark:text-yellow-200"} [:span.w-5.h-5 (components/basic-spinner-bold)]]
+    ]
+   [:.flex
+    [:.inline-flex.flex-shrink-0.justify-center.items-center.w-8.h-8.rounded-lg.text-green-500 {:class "dark:text-green-200"} [:span.w-5.h-5 (components/basic-spinner)]]
+    [:.inline-flex.flex-shrink-0.justify-center.items-center.w-8.h-8.rounded-lg.text-blue-500 {:class "dark:text-blue-200"} [:span.w-5.h-5 (components/basic-spinner)]]
+    [:.inline-flex.flex-shrink-0.justify-center.items-center.w-8.h-8.rounded-lg.text-yellow-500 {:class "dark:text-yellow-200"} [:span.w-5.h-5 (components/basic-spinner)]]
     ]])
 
 

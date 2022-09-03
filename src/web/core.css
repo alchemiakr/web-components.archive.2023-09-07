@@ -4,12 +4,6 @@
 @import "../../src/core/alchemiakr/components.css";
 
 
-#floating-label-input-01 ~ label::after
-{
-  content: "레이블";
-}
-
-
 @layer components
 {
   #ui-listbox-option-theme
@@ -26,4 +20,13 @@
   {
     @apply bg-slate-50 dark:bg-slate-600/30
   }
+}
+
+
+/* custom */
+
+
+#floating-label-input-01 ~ label::after
+{
+  content: "레이블";
 }
