@@ -36,7 +36,7 @@
               (page.components/examples)]
              [:aside]])
           (server-render/html-response)))]
-     ["/table"
+     ["/table/"
       (fn [request]
         (-> request
           (assoc :html/contents

@@ -96,7 +96,7 @@
        (fn [{dev? :dev/after-load :as _user-state} _reconciler]
          (render (page.components/header reconciler) (js/document.querySelector "#header") dev?)
          (render (page.components/examples) (js/document.querySelector "#mount") dev?))}]
-     ["/table"
+     ["/table/"
       {:name ::table
        :on-navigate
        (fn [{dev? :dev/after-load :as _user-state} _reconciler]

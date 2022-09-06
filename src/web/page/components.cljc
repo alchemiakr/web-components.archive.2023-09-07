@@ -109,7 +109,8 @@
   [data columns]
   [:.mt-2.px-2.flex.flex-col.h-screen
    [:.md-table-wrapper
-    (basic-table data columns)]
+    #?(:cljs
+       (basic-table data columns))]
    [:.grid.grid-cols-1.gap-4
     {:class ["md:hidden"]}
     (for [entry data]
