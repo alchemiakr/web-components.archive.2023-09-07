@@ -36,7 +36,7 @@
    "rum/core.cljs", "shadow/module/libs/append.js"]},
  {"module-id":"main",
   "name":"main",
-  "output-name":"main.87F96620.js",
+  "output-name":"main.4EE2C1E5.js",
   "entries":["page.index", "page.index"],
   "depends-on":["libs"],
   "sources":
