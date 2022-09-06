@@ -30,6 +30,7 @@
     "webpack-manifest-plugin": "^5.0.0"
   },
   "dependencies": {
+    "@tanstack/react-table": "^8.5.13",
     "create-react-class": "^15.7.0",
     "react": "^16.14.0",
     "react-dom": "^16.14.0"
