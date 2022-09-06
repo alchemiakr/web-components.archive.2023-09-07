@@ -7,6 +7,7 @@ on:
       - ".github/workflows/package.yml"
       - "deps.edn"
       - 'build/package.clj'
+      - "src/core/**/*.css"
       - "src/core/**/*.clj"
       - "src/core/**/*.cljc"
       - "src/test/**/*.clj"
