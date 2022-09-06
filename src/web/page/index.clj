@@ -35,4 +35,11 @@
              [:#mount
               (page.components/examples)]
              [:aside]])
+          (server-render/html-response)))]
+     ["/table"
+      (fn [request]
+        (-> request
+          (assoc :html/contents
+            [[:main]
+             [:aside]])
           (server-render/html-response)))]]))

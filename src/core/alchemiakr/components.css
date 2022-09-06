@@ -1,4 +1,31 @@
-/* floating-label-input */
+/* * md-table-wrapper
+ */
+
+
+@layer components
+{
+  .md-table-wrapper
+  {
+    @apply hidden md:block overflow-auto rounded-lg shadow;
+  }
+}
+
+
+/* * md-hidden-grid
+ */
+
+
+@layer
+{
+  .md-hidden-grid
+  {
+    @apply grid grid-cols-1 gap-4 md:hidden
+  }
+}
+
+
+/* * floating-label-input
+ */
 
 
 @layer components

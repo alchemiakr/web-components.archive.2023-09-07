@@ -2,6 +2,7 @@
   (:require
    [oops.core :as oops]
    [goog.events :as gevents]
+   [goog.dom]
    [goog.dom.classlist :as classlist]
    [reitit.core :as reitit]
    [reitit.frontend :as rf]
@@ -12,7 +13,17 @@
    [rum.core :as rum]
    [citrus.core :as citrus]
    [page.components]
+   [page.index.table :as table]
    ))
+
+
+(defn render
+  [component node dev?]
+  (if dev?
+    (rum/mount component node)
+    (if (seq (goog.dom/getChildren node))
+      (rum/hydrate component node)
+      (rum/mount component node))))
 
 
 (defn system-dark-mode?
@@ -54,15 +65,9 @@
                        :theme      theme-controller}
      :effect-handlers {:on-navigate
                        (fn [r _controller-name {:keys [::reitit/match] :as effect}]
-                         (let [reactjs-render (if (:dev/after-load effect)
-                                                rum/mount
-                                                (if (get-in match [:data :rum/ssr])
-                                                  rum/hydrate
-                                                  rum/mount))
-                               f              (get-in match [:data :on-navigate])]
-                           (when (fn? f)
-                             (f (assoc effect :reactjs-render reactjs-render) r))))
-
+                         (let [on-navi (get-in match [:data :on-navigate])]
+                           (when (fn? on-navi)
+                             (on-navi (assoc effect :dev/after-load (:dev/after-load effect)) r))))
                        :set-theme
                        (fn [_r _controller-name {:keys [theme selector]}]
                          (let [el (or (js/document.querySelector selector) js/document.documentElement)]
@@ -88,9 +93,14 @@
     [["/"
       {:name ::root
        :on-navigate
-       (fn [{:keys [:reactjs-render] :as _user-state} _reconciler]
-         (reactjs-render (page.components/header reconciler) (js/document.querySelector "#header"))
-         (reactjs-render (page.components/examples) (js/document.querySelector "#mount")))}]]))
+       (fn [{dev? :dev/after-load :as _user-state} _reconciler]
+         (render (page.components/header reconciler) (js/document.querySelector "#header") dev?)
+         (render (page.components/examples) (js/document.querySelector "#mount") dev?))}]
+     ["/table"
+      {:name ::table
+       :on-navigate
+       (fn [{dev? :dev/after-load :as _user-state} _reconciler]
+         (render (page.components/examples-table table/sample-data table/columns) (js/document.querySelector "main") dev?))}]]))
 
 
 ;;

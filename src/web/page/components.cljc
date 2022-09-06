@@ -3,6 +3,10 @@
    [rum.core :as rum]
    [citrus.core :as citrus]
    [alchemiakr.components :as components]
+   #?@(:cljs
+       [[oops.core :as oops]
+        ["@tanstack/table-core"]
+        ["@tanstack/react-table" :as tanstack.rt]])
    ))
 
 
@@ -74,6 +78,66 @@
       :type        "text"
       :placeholder "Placeholder"}]
     [:label {:for "floating-label-input-01"}]]])
+
+
+#?(:cljs
+   (rum/defc basic-table
+     [data columns]
+     (let [[state set-state!] (rum/use-state data)
+           table              (tanstack.rt/useReactTable
+                                #js {:data            state
+                                     :columns         columns
+                                     :getCoreRowModel (tanstack.rt/getCoreRowModel)})]
+       [:table
+        [:thead
+         (for [header-group (.getHeaderGroups table)]
+           [:tr {:key (oops/oget header-group "id")}
+            (for [header (oops/oget header-group "headers")]
+              [:th {:key   (oops/oget header "id")
+                    :scope "col"}
+               (when-not (oops/oget header "isPlaceholder")
+                 (tanstack.rt/flexRender (oops/oget header "column.columnDef.header") (.getContext header)))])])]
+        [:tbody
+         (for [row (.. table (getRowModel) -rows)]
+           [:tr {:key (oops/oget row "id")}
+            (for [cell (.getVisibleCells row)]
+              [:td {:key (oops/oget cell "id")}
+               (tanstack.rt/flexRender (oops/oget cell "column.columnDef.cell") (.getContext cell))])])]])))
+
+
+(rum/defc examples-table
+  [data columns]
+  [:.mt-2.px-2.flex.flex-col.h-screen
+   [:.md-table-wrapper
+    (basic-table data columns)]
+   [:.grid.grid-cols-1.gap-4
+    {:class ["md:hidden"]}
+    (for [entry data]
+      [:.bg-white.p-4.rounded-lg.shadow
+       [:.flex.items-center.gap-4
+        [:img.rounded-full.profile-image.w-14.h-14
+         {:src (:profileUrl entry)}]
+        [:.flex.flex-col
+         [:.flex.items-baseline
+          {:class ["gap-x-0.5"]}
+          [:.text-slate-900.text-sm.font-medium (:firstName entry)]
+          [:.text-slate-900.text-sm.font-medium (:lastName entry)]
+          [:.text-slate-500.text-xs (when-some [age (:age entry)] (str "(" age ")"))]]
+         [:flex
+          [:span.text-xs.font-medium.text-green-500.bg-green-200.rounded-lg.bg-opacity-50.uppercase
+           {:class ["p-1.5"]}
+           (:status entry)]]
+         #_[:.text-slate-500.text-sm.font-medium ]]]])]]
+  #_[:.mt-20.flex.flex-col.h-screen
+     [:div
+      ;; .-my-2.overflow-x-auto.-mx-4
+      {:class ["sm:-mx-6" "lg:-mx-8"]}
+      [:.py-2.align-middle.inline-block.min-w-full
+       {:class ["sm:px-6" "lg:px-8"]}
+       [:.shadow.overflow-auto.border-b.border-gray-200
+        ;; .overflow-hidden
+        {:class ["sm:rounded-lg"]}
+        ]]]])
 
 
 (rum/defc examples

@@ -4,6 +4,30 @@
 @import "../../src/core/alchemiakr/components.css";
 
 
+@layer base
+{
+  table
+  {
+    @apply w-full;
+  }
+
+  table > thead
+  {
+    @apply bg-gray-50 border-b-2 border-gray-200;
+  }
+
+  thead > tr > th
+  {
+    @apply p-3 text-left text-sm font-semibold tracking-wide;
+  }
+
+  tbody > tr > td
+  {
+    @apply p-3;
+  }
+}
+
+
 @layer components
 {
   #ui-listbox-option-theme
